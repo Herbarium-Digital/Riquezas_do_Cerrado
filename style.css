@@ -1,0 +1,350 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('fundo.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: blur(5px);
+    z-index: -1;
+}
+
+h1 {
+    text-align: center;
+    color: #2c5e2e;
+    margin-bottom: 40px;
+}
+
+.plant-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 25px;
+    max-width: 1400px;
+    /* ✨ Adiciona 40px de espaço no topo e embaixo dos cards */
+    margin: 40px auto;
+}
+
+.plant-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.plant-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+}
+
+.plant-card img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+}
+
+/* Crédito da foto (exigido pelas licenças do Wikimedia Commons) */
+.photo-credit {
+    font-size: 0.7rem;
+    color: #888;
+    text-align: right;
+    margin: 4px 12px 0;
+}
+
+.photo-credit a {
+    color: #888;
+}
+
+.plant-card .scientific-name {
+    text-align: center;
+    font-style: italic;
+    color: #666;
+    margin: -4px 20px 10px;
+}
+
+/* Bloco "Forma de consumo" (plantas alimentícias) */
+.consumption {
+    background-color: #f1f8f1;
+    border: 1px solid #cfe3cf;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.plant-card h2 {
+    font-size: 1.5rem;
+    color: #222;
+    text-align: center;
+    margin: 20px 20px 10px 20px;
+}
+
+.plant-card .brief-description {
+    font-size: 0.95rem;
+    color: #555;
+    line-height: 1.5;
+    padding: 0 25px;
+    flex-grow: 1;
+}
+
+.toggle-btn {
+    display: block;
+    width: calc(100% - 50px);
+    margin: 20px 25px;
+    padding: 12px;
+    background-color: #4a7c4c;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.toggle-btn:hover {
+    background-color: #3b633d;
+}
+
+.full-info {
+    display: none;
+    padding: 0 25px 25px 25px;
+    border-top: 1px solid #eee;
+    margin-top: 15px;
+}
+
+.full-info.active {
+    display: block;
+}
+
+.full-info p {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 12px;
+}
+
+.full-info strong {
+    color: #2c5e2e;
+    display: block;
+    margin-bottom: 3px;
+    font-size: 0.95rem;
+}
+
+.precaution {
+    background-color: #fff4f4;
+    border: 1px solid #f2caca;
+    color: #a94442;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.precaution strong {
+    color: #a94442;
+    display: inline;
+    margin-bottom: 0;
+}
+
+.main-header {
+    background-color: #2c5e2e;
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    /* ✨ Adiciona o border-radius nos cantos de baixo do topo */
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+}
+
+.main-header h1 {
+    color: white;
+    font-size: 1.5rem;
+    margin: 0;
+    /* ✨ Faz o título crescer e centraliza o texto */
+    flex-grow: 1;
+    text-align: center;
+}
+
+.menu-toggle {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+.sidebar {
+    height: 100%;
+    width: 280px;
+    position: fixed;
+    z-index: 200;
+    top: 0;
+    left: -280px;
+    background-color: #fefefe;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+    transition: left 0.3s ease-in-out;
+    padding-top: 60px;
+}
+
+.sidebar.active {
+    left: 0;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar ul li {
+    border-bottom: 1px solid #eee;
+}
+
+.sidebar ul li a {
+    display: block;
+    padding: 18px 25px;
+    text-decoration: none;
+    color: #333;
+    font-size: 1.1rem;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.sidebar ul li a:hover {
+    background-color: #f4f4f4;
+}
+
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    font-size: 2.5rem;
+    color: #888;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 150;
+}
+
+.overlay.active {
+    display: block;
+}
+
+@media (max-width: 500px) {
+    body {
+        padding: 10px;
+    }
+
+    .main-header {
+        padding: 10px 15px;
+    }
+
+    .main-header h1 {
+        font-size: 1.3rem;
+    }
+
+    .plant-card .brief-description {
+        padding: 0 20px;
+    }
+
+    .full-info {
+        padding: 0 20px 20px 20px;
+    }
+
+    .toggle-btn {
+        margin: 20px 20px;
+        width: calc(100% - 40px);
+    }
+}
+
+/* ===== Painel sobreposto do "Ler mais" ===== */
+.full-info {
+    display: none;
+    position: absolute; /* 🔹 Sobrepõe os outros cards */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.98);
+    padding: 25px;
+    border-radius: 0 0 12px 12px;
+    overflow-y: auto;
+    z-index: 10;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    animation: slideDown 0.3s ease forwards;
+}
+
+/* Mostra o painel quando ativo */
+.full-info.active {
+    display: block;
+}
+
+/* Animação suave ao abrir */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* O card serve de base para o painel */
+.plant-card {
+    position: relative;
+    /* ATUALIZADO: mudei de 'visible' para 'hidden' */
+    overflow: hidden; 
+}
+
+/* ===== Botão "Ler Menos" dentro da sobreposição ===== */
+.full-info .close-info {
+    /* === ESTILOS ATUALIZADOS ABAIXO === */
+    display: block;
+    width: 100%; /* Para preencher a área do painel */
+    margin-top: 25px;
+    padding: 12px; /* Mesmo padding do "Leia Mais" */
+    background-color: #4a7c4c;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+    /* === FIM DOS ESTILOS ATUALIZADOS === */
+}
+
+.full-info .close-info:hover {
+    background-color: #3b633d;
+}
